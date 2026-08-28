@@ -73,8 +73,7 @@ EcoDash/
 ├── docs/
 │   ├── african-context-report.md   # Task 1.2 African problem + math model
 │   ├── ai-reflection-log.md        # Task 1.3 AI use log + ethics
-│   ├── wireframe.html              # Task 1.3 annotated wireframe
-│   └── CODE_WALKTHROUGH.md         # Defence-prep guide: module by module
+│   └── wireframe.html              # Task 1.3 annotated wireframe
 └── README.md               # This file
 ```
 
@@ -126,7 +125,7 @@ EC.Weather.strength01      // 0..1 current wind strength
 | **Day/night cycle** (`celestial.js`) | **No** | **Original AI-blind feature** — designed & implemented independently; full explanation in the AI Reflection Log |
 | Terrain / village generation | Yes (edited) | AI-assisted; logic rewritten around a student-chosen seeded RNG |
 | Sounds & music | Yes (edited) | Procedural Web Audio built with AI drafts, then modified |
-| Documentation | Partly | Report/walkthrough drafted by student with AI proof-reading |
+| Documentation | Partly | Reports drafted by student with AI proof-reading |
 
 *See the full `docs/ai-reflection-log.md` for prompts, outputs, problems found and modifications made.*
 
