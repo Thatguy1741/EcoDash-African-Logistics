@@ -64,17 +64,44 @@
       this.setupKeyboard();
       this.refreshOverlays();
 
-      // Start the loop.
+      // Start the loop. Wrapped in try/catch so that if ANY error
+      // happens the game keeps running and prints the error on the
+      // canvas + console instead of silently freezing.
       this.lastTs = performance.now();
       this.tick = (ts) => {
         const dt = Math.min(0.033, (ts - this.lastTs) / 1000);
         this.lastTs = ts;
-        if (this.state === "playing") this.updatePlaying(dt);
-        else if (this.state === "menu") this.updateMenu(dt);
-        this.draw(dt);
+        try {
+          if (this.state === "playing") this.updatePlaying(dt);
+          else if (this.state === "menu") this.updateMenu(dt);
+          this.draw(dt);
+        } catch (err) {
+          this.drawError(err);
+        }
         requestAnimationFrame(this.tick);
       };
       requestAnimationFrame(this.tick);
+    }
+
+    // Show any runtime error on screen so it can be reported, and
+    // log it to the DevTools console for full detail.
+    drawError(err) {
+      const ctx = this.ctx;
+      ctx.fillStyle = "rgba(25, 8, 8, 0.94)";
+      ctx.fillRect(0, 0, this.W, this.H);
+      ctx.fillStyle = "#ffb3a3";
+      ctx.font = "14px Consolas, monospace";
+      ctx.textAlign = "left";
+      let y = 34;
+      const line = (txt) => {
+        if (y > this.H - 8) return;
+        ctx.fillText((txt || "").slice(0, 130), 22, y);
+        y += 18;
+      };
+      line("GAME ERROR - copy this to the console report:");
+      line("  " + err.message);
+      (err.stack || err.toString() || "").split("\n").slice(0, 9).forEach((s) => line(s.trim()));
+      if (console && console.error) console.error("EcoDash error:", err);
     }
 
     /* ==================== mission setup ==================== */
