@@ -112,6 +112,24 @@ the live code defence and handle edits to any file.
 
 ---
 
+### Session 8 — 28 Aug 2026 · Play-test checklist via DevTools console
+- **Found myself:** after starting the game the drone felt right, but I was
+  suspicious of how smooth it was — so I opened the DevTools Console while on
+  the **menu screen** and watched one error repeat every frame:
+  `TypeError: this.solarZones is not iterable (Game.draw)`.
+- **Lesson learned:** `newMission()` created the zone arrays, but the menu
+  screen draws the same scene *before* a mission exists. The arrays were
+  undefined there, so `for (const z of this.solarZones)` threw once per frame
+  (~60/sec). The game only "worked" after Start because starting created them.
+- **AI role:** after I pasted the five-line error, the AI pointed out the
+  constructor vs `newMission()` split and the principle *"anything draw touches
+  must exist before the first frame"*. I moved the array initialisation into
+  the `Game` constructor myself and confirmed the console stays silent.
+- **Result:** `js/game.js` constructor change (commit `966814f`). Good habit I
+  now use every session: play with F12 Console open.
+
+---
+
 ## 3. Patterns I now own (knowledge gained)
 
 - `cos/sin` to place anything on a circle/arc (sun, birds, sparks, thrust).
