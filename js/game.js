@@ -57,6 +57,14 @@
       this.state = "menu";
       this.drone = null;
 
+      // Mission entities are created empty up-front so the MENU screen
+      // (which draws the same scene) never iterates an undefined array.
+      this.obstacles = [];
+      this.solarZones = [];
+      this.loadZones = [];
+      this.storms = [];
+      this.activeDelivery = null;
+
       this.world.ensureTo(1500);
 
       this.bindUI();
