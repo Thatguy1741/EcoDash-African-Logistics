@@ -462,6 +462,7 @@
       this.newHighRank = saved.rank;
 
       this.renderGameOverUI(entry, grade, saved.list);
+      this.refreshOverlays(); // make the game-over screen VISIBLE
     }
 
     renderGameOverUI(entry, grade, list) {
@@ -478,9 +479,12 @@
       const ol = $("go-highscore-list");
       ol.innerHTML = "";
       list.forEach((item, idx) => {
+        const label = item.label ||
+          item.distanceKm.toFixed(2) + " km · " + item.deliveries + " parcels · " +
+          item.grade + " · " + (item.date || "");
         const li = document.createElement("li");
         li.innerHTML = "<span>" + (idx + 1) + ". " + item.score + " pts</span>" +
-                       "<span>" + item.label + "</span>";
+                       "<span>" + label + "</span>";
         if (idx === this.newHighRank) li.classList.add("new-entry");
         ol.appendChild(li);
       });

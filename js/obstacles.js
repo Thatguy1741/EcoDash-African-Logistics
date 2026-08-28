@@ -76,7 +76,7 @@
       this.canopyR = U.rand(46, 62);
       this.shed = U.rand(0, Math.PI * 2);
       this.lean = U.rand(-0.08, 0.08);
-      this.canopyCy = this.groundY - 196;   // canopy centre (world y)
+      this.canopyCy = this.groundY - 150;   // canopy centre (world y)
     }
     colliders() {
       return [
@@ -93,10 +93,10 @@
     draw(ctx, camX, nf) {
       const sx = this.x - camX;
       const gy = this.groundY;
-      // Trunk
+      // Trunk (reaches up INTO the canopy so no gap appears).
       ctx.fillStyle = U.cssColour(U.shadeColour({ r: 110, g: 82, b: 44 }, 1 - nf * 0.5));
       ctx.beginPath();
-      ctx.roundRect(sx - 8, gy - 100, 16, 100, 4);
+      ctx.roundRect(sx - 8, gy - 140, 16, 140, 4);
       ctx.fill();
       // Branches
       ctx.strokeStyle = U.cssColour(U.shadeColour({ r: 96, g: 70, b: 38 }, 1 - nf * 0.5));
