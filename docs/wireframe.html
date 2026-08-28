@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoDash — Wireframe</title>
+<style>
+  :root { --ink:#1d2a1d; --accent:#e2725b; --skin:#f7efe2; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:24px; background:var(--skin); color:var(--ink);
+         font-family:system-ui, -apple-system, "Segoe UI", sans-serif; }
+  h1,h2 { margin:0 0 8px; }
+  .sub { color:#6b5d4a; margin-bottom:24px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:20px; }
+  .screen { background:#fff; border:2px solid var(--ink); border-radius:12px;
+            padding:14px 14px 12px; position:relative; box-shadow:3px 3px 0 rgba(0,0,0,.12); }
+  .screen h3 { margin:0 0 8px; border-bottom:2px solid var(--accent); padding-bottom:4px; }
+  .frame { border:2px dashed #bbb; border-radius:8px; padding:10px; position:relative; }
+  .tv { display:block; width:100%; aspect-ratio:16/9; background:#cfe0ce;
+        border-radius:6px; position:relative; overflow:hidden; }
+  .tv::after { content:""; position:absolute; inset:0;
+      background:linear-gradient(180deg, rgba(120,170,210,.35), rgba(120,170,210,0) 60%); }
+  .ground { position:absolute; left:0; right:0; bottom:0; height:30%;
+             background:repeating-linear-gradient(90deg, #5e8a4a 0 40px, #557f42 40px 80px); border-top:2px solid #42602f; }
+  .hill { position:absolute; width:60%; height:60%; background:#7ba860; border-radius:50% 50% 0 0; }
+  .hill.b { left:55%; top:34%; width:70%; height:70%; background:#68924f; }
+  .sun { position:absolute; width:9px; height:9px; border-radius:50%; background:gold; right:18%; top:16%; box-shadow:0 0 12px 6px rgba(255,215,0,.5); }
+  .pbar { position:absolute; left:4%; top:6%; width:34%; height:10px; background:rgba(0,0,0,.45); border-radius:5px; }
+  .pbar::before { content:""; position:absolute; left:2px; top:2px; bottom:2px; width:70%; background:#ffd24a; border-radius:3px; }
+  .pbar::after { content:"BATTERY"; font-size:7px; color:#fff; position:absolute; left:36%; top:2px; letter-spacing:1px; }
+  .pbar2 { display:none; }
+  .panel { position:absolute; left:4%; top:14%; width:34%; height:12px; background:rgba(0,0,0,.45); border-radius:5px; }
+  .panel::before { content:""; position:absolute; left:2px; top:2px; bottom:2px; width:40%; background:#6fcf6f; border-radius:3px; }
+  .drone { position:absolute; left:46%; top:52%; width:16px; height:16px; opacity:.95; z-index:2; }
+  .drone::before { content:""; position:absolute; inset:0; background:#2f3a55; border-radius:4px 8px 4px 8px; }
+  .drone::after { content:""; position:absolute; left:6px; top:-6px; width:4px; height:7px; background:#999; border-radius:2px; }
+  .labels { position:absolute; left:10px; bottom:8px; right:10px; display:flex; gap:8px; flex-wrap:wrap; }
+  .labels span { background:rgba(20,40,20,.8); color:#fff; font-size:10px; padding:4px 8px; border-radius:6px; }
+  .bar { position:absolute; left:4%; top:6%; width:38%; height:9px; background:rgba(0,0,0,.45); border-radius:5px; }
+  .bar::before { content:""; position:absolute; left:2px; top:2px; bottom:2px; width:66%; background:#7fd07f; border-radius:3px; }
+  .chip { position:absolute; right:4%; top:6%; background:rgba(0,0,0,.45); color:#fff; font-size:9px; padding:3px 7px; border-radius:5px; }
+  ul { font-size:13px; line-height:1.5; margin:8px 0 0; padding-left:18px; }
+  .tag { display:inline-block; background:var(--accent); color:#fff; font-size:10px;
+         padding:2px 9px; border-radius:20px; margin-right:6px; vertical-align:1px; }
+</style>
+</head>
+<body>
+  <h1>EcoDash — Screen Wireframe <span class="tag">Task 1.3</span></h1>
+  <p class="sub">Annotations for the four core screens. Drawn as an enlarged 16:9 canvas mock; final resolution is 960×540 (scaled to fit).</p>
+
+  <div class="grid">
+
+    <!-- MENU -->
+    <section class="screen">
+      <h3>1 · Main Menu</h3>
+      <div class="frame">
+        <div class="tv">
+          <div class="sun"></div>
+          <div class="hill"></div>
+          <div class="hill b"></div>
+          <div class="ground"></div>
+          <div class="drone"></div>
+          <div class="labels" style="top:30%;bottom:auto;flex-direction:column;">
+            <span>ECO DASH — title, african-pattern band</span>
+            <span>START MISSION (Enter)</span>
+            <span>HIGH SCORES (top 5)</span>
+            <span>HOW TO PLAY / CONTROLS</span>
+          </div>
+        </div>
+      </div>
+      <ul>
+        <li>Background = live animated world (pretty, shows day/night).</li>
+        <li>Menu buttons overlay centre; Enter starts, buttons clickable.</li>
+      </ul>
+    </section>
+
+    <!-- PLAYING -->
+    <section class="screen">
+      <h3>2 · Playing (main gameplay)</h3>
+      <div class="frame">
+        <div class="tv">
+          <div class="sun"></div>
+          <div class="hill"></div>
+          <div class="hill b"></div>
+          <div class="ground"></div>
+          <div class="drone"></div>
+          <div class="bar"></div>
+          <div class="pbar"></div>
+          <div class="chip" style="right:8%;top:6%;">wind&nbsp;↖</div>
+          <div class="chip" style="right:8%;top:14%;">delivery&nbsp;→</div>
+          <div class="labels" style="top:auto;bottom:8px;">
+            <span>solar zone</span><span>load-shedding zone</span><span>beacon = parcel</span><span>trees/towers/birds</span>
+          </div>
+        </div>
+      </div>
+      <ul>
+        <li>Top-left: soldier bars — reserve (battery %, yellow) + hull (green). Right: wind direction + pacel beacon compass.</li>
+        <li>Pilot snake via trapezoid + rotor visually on-canvas.</li>
+        <li>Bottom-left: mission panel (score, combo ×N, km travelled, grade).</li>
+        <li>Ground parallax runs beneath; overlays: Pause, Mute, scores, toasts.</li>
+      </ul>
+    </section>
+
+    <!-- PAUSED -->
+    <section class="screen">
+      <h3>3 · Paused / Settings</h3>
+      <div class="frame">
+        <div class="tv">
+          <div class="hill"></div>
+          <div class="hill b"></div>
+          <div class="ground"></div>
+          <div class="labels" style="top:36%;bottom:auto;flex-direction:column;">
+            <span>PAUSED</span>
+            <span>RESUME (Esc/P)</span>
+            <span>RESTART (R)</span>
+            <span>SOUND: ON ▸ MUTE</span>
+            <span>MAIN MENU</span>
+          </div>
+        </div>
+      </div>
+      <ul>
+        <li>Translucent dark overlay drawn over the frozen frame.</li>
+        <li>Keyboard: Esc/P toggles; buttons also work; sound flag persisted? no — in-session only.</li>
+      </ul>
+    </section>
+
+    <!-- GAME OVER -->
+    <section class="screen">
+      <h3>4 · Game Over / Results</h3>
+      <div class="frame">
+        <div class="tv">
+          <div class="ground"></div>
+          <div class="labels" style="top:24%;bottom:auto;flex-direction:column;">
+            <span>MISSION REPORT — GRADE [A+…D]</span>
+            <span>Distance 12.4 km · Parcels 7 · Combos 3</span>
+            <span>★ HIGH SCORES ★ (top 5, from localStorage)</span>
+            <span>NEW HIGH SCORE! (badge)</span>
+            <span>RESTART (Enter) · MAIN MENU</span>
+          </div>
+        </div>
+      </div>
+      <ul>
+        <li>Grade computed = parcels ÷ total reserve spent; explains why it matters (energy efficiency).</li>
+        <li>High-score list re-renders from <code>localStorage</code>; new entry highlighted.</li>
+      </ul>
+    </section>
+  </div>
+
+  <h2 style="margin-top:28px">Interaction Flow</h2>
+  <pre>menu ─Enter→ playing ─Esc/P→ paused ─Esc/P→ playing
+  playing ─drone death (hull ≤ 0 / crash)→ gameover ─Enter→ playing
+  any ─Esc(in gameover)→ menu</pre>
+
+  <footer style="margin-top:24px;color:#6b5d4a;font-size:12px">
+    {student} · WAS262 SF1 · generated 2026 — refine/sketch by hand on paper per submission instructions before finalizing.
+  </footer>
+</body>
+</html>

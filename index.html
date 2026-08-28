@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<!-- ============================================================
+  EcoDash - African Digital Logistics & Infrastructure Simulator
+  WAS262 - Web Animation Scripting - SF1
+
+  This file only builds the page structure. All drawing is done
+  on the HTML5 <canvas> tag below by our JavaScript "engine".
+
+  File loading order (bottom of page) is IMPORTANT:
+    1. utils   - math / random helpers (no dependencies)
+    2. input   - keyboard + touch
+    3. storage - localStorage high scores
+    4. audio   - procedural sound engine (Web Audio API)
+    5. celestial - AI-BLIND FEATURE: day / night cycle
+    6. weather - global wind system
+    7. particles - dust / spark / leaf effects
+    8. world   - scrolling African terrain + villages
+    9. drone   - the player's solar drone (movement physics)
+   10. obstacles - trees, towers, birds, storms, solar & load-shed zones
+   11. hud     - on-canvas heads-up display
+   12. game    - the Game class that ties everything together
+   13. main    - bootstraps the Game
+
+  Each script attaches its exports to a single global object:
+      window.EcoDash  (short name: EC)
+  e.g. EC.Drone, EC.Game, EC.Input ...
+  ============================================================ -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>EcoDash — Solar Drone Logistics Simulator</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- The whole application lives inside this wrapper div -->
+  <div id="app">
+
+    <!-- ======= TOP BAR (DOM UI - pause + mute buttons + mission tag) ======= -->
+    <header id="topbar">
+      <div id="brand">
+        <span class="brand-mark"></span>
+        <h1>Eco<span>Dash</span></h1>
+        <p>African Logistics Simulator</p>
+      </div>
+      <div id="topbar-buttons">
+        <button id="btn-pause" class="ui-btn" type="button" title="Pause (P)">
+          <span class="icon">&#10073;&#10073;</span> Pause
+        </button>
+        <button id="btn-mute" class="ui-btn" type="button" title="Toggle sound (M)">
+          <span class="icon">&#9835;</span> <span id="mute-label">Sound On</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ======= CANVAS STAGE (the game screen) ======= -->
+    <!-- The canvas keeps an internal resolution of 960x540.
+         CSS scales it to fit the window while preserving 16:9. -->
+    <div id="canvas-wrap">
+      <canvas id="game-canvas" width="960" height="540"></canvas>
+
+      <!-- ---------- START / MENU SCREEN ---------- -->
+      <div id="menu-screen" class="overlay">
+        <div class="panel panel-menu">
+          <h2 class="menu-title">Eco<span>Dash</span></h2>
+          <p class="menu-sub">Solar Drone Logistics Simulator</p>
+
+          <p class="menu-story">
+            Rural clinics and villages across Africa depend on medical supplies,
+            food and emergency equipment. You pilot a <strong>solar-powered delivery drone</strong>
+            over a vast African landscape.<br><br>
+            Deliver parcels to village beacons, ride the <strong>solar microgrid zones</strong> to
+            recharge, dodge <strong>trees, towers and wildlife</strong>, and survive
+            <strong>storms and load-shedding</strong>. How far can your solar reserve take you?
+          </p>
+
+          <div class="menu-cols">
+            <div class="menu-col">
+              <h3>Controls</h3>
+              <ul class="ctrl-list">
+                <li><b>W / Up / Space</b> — throttle (thrust)</li>
+                <li><b>A / Left</b> — rotate nose left</li>
+                <li><b>D / Right</b> — rotate nose right</li>
+                <li><b>S / Down</b> — brake (extra drag)</li>
+                <li><b>P / Esc</b> — pause &nbsp; <b>M</b> — mute</li>
+                <li><b>Enter</b> — start / restart</li>
+              </ul>
+              <p class="touch-hint">Touch devices: on-screen buttons appear below.</p>
+            </div>
+            <div class="menu-col">
+              <h3>Objective</h3>
+              <ul class="ctrl-list">
+                <li>&#9733; Deliver parcels to glowing village beacons</li>
+                <li>&#9733; Recharge inside solar microgrid zones</li>
+                <li>&#9733; Avoid load-shedding (it disables charging)</li>
+                <li>&#9733; Don't drain the battery or crash</li>
+                <li>&#9733; Chain deliveries for combo multipliers</li>
+              </ul>
+            </div>
+          </div>
+
+          <button id="btn-start" class="btn-primary" type="button">Start Mission</button>
+
+          <div class="highscores-box">
+            <h3>Hall of Fame</h3>
+            <ol id="highscore-list" class="highscore-list">
+              <li class="empty">No missions recorded yet</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---------- PAUSE SCREEN ---------- -->
+      <div id="pause-screen" class="overlay hidden">
+        <div class="panel panel-small">
+          <h2 class="menu-title">Paused</h2>
+          <p>Your drone is hovering. The solar reserve is on stand-by.</p>
+          <button id="btn-resume" class="btn-primary" type="button">Resume</button>
+          <div class="btn-row">
+            <button id="btn-pause-restart" class="btn-secondary" type="button">Restart Mission</button>
+            <button id="btn-pause-menu" class="btn-secondary" type="button">Main Menu</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---------- GAME OVER SCREEN ---------- -->
+      <div id="gameover-screen" class="overlay hidden">
+        <div class="panel panel-gameover">
+          <h2 class="menu-title">Mission <span class="go-word">Ended</span></h2>
+          <p id="go-reason" class="go-reason">Battery depleted.</p>
+          <p id="go-new-high" class="new-high hidden">&#9733; NEW HIGH SCORE &#9733;</p>
+
+          <div class="stats-grid">
+            <div class="stat"><span class="stat-label">Mission Score</span><span id="go-score" class="stat-value">0</span></div>
+            <div class="stat"><span class="stat-label">Distance</span><span id="go-km" class="stat-value">0 km</span></div>
+            <div class="stat"><span class="stat-label">Deliveries</span><span id="go-deliveries" class="stat-value">0</span></div>
+            <div class="stat"><span class="stat-label">Energy Grade</span><span id="go-grade" class="stat-value">B</span></div>
+          </div>
+
+          <div class="highscores-box">
+            <h3>Hall of Fame</h3>
+            <ol id="go-highscore-list" class="highscore-list"></ol>
+          </div>
+
+          <div class="btn-row">
+            <button id="btn-retry" class="btn-primary" type="button">Retry Mission</button>
+            <button id="btn-go-menu" class="btn-secondary" type="button">Main Menu</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---------- Low battery / info toast that floats over the canvas ---------- -->
+      <div id="toast" class="toast hidden"></div>
+    </div>
+
+    <!-- ======= TOUCH CONTROLS (auto-hidden on mouse devices) ======= -->
+    <div id="touch-controls" class="touch-only">
+      <button class="touch-btn" data-action="left" type="button">Left</button>
+      <button class="touch-btn touch-throttle" data-action="throttle" type="button">Thrust</button>
+      <button class="touch-btn" data-action="brake" type="button">Brake</button>
+      <button class="touch-btn" data-action="right" type="button">Right</button>
+    </div>
+
+    <!-- ======= KEYBOARD HINT FOOTER ======= -->
+    <footer id="footer">
+      <p>W = thrust &nbsp;&middot;&nbsp; A / D = turn &nbsp;&middot;&nbsp; S = brake &nbsp;&middot;&nbsp; P = pause &nbsp;&middot;&nbsp; M = sound</p>
+    </footer>
+  </div>
+
+  <!-- ======= SCRIPTS (order matters - see header comment) ======= -->
+  <script src="js/utils.js"></script>
+  <script src="js/input.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/celestial.js"></script>
+  <script src="js/weather.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/world.js"></script>
+  <script src="js/drone.js"></script>
+  <script src="js/obstacles.js"></script>
+  <script src="js/hud.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
