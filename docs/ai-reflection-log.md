@@ -128,6 +128,24 @@ the live code defence and handle edits to any file.
 - **Result:** `js/game.js` constructor change (commit `966814f`). Good habit I
   now use every session: play with F12 Console open.
 
+### Session 9 — 31 Aug 2026 · Drone visuals and flight feel
+- **Found myself:** the rotor was floating above the drone body and shifted to
+  the left — the translate offset `(-4, -14)` didn't match the fuselage
+  centre. Fixed by calculating the body's true centre (`roundRect` x: -16 to
+  +18 = centre at x 1) and moving the rotor to `(1, -9)`.
+- **Found (AI helped debug):** I tried adding a second propeller (front + rear
+  rotors) but the two blades collided in the draw order — one propeller's
+  ellipse overlapped the other's, creating the visual impression that one was
+  "spinning" the other. Solved by spacing the two rotor centres symmetrically
+  around the body centre (x = −5 and x = +7) so they never overlap.
+- **Found myself:** HOVER_LIFT (205) was greater than GRAVITY (170), so the
+  drone floated upward without any thrust — not realistic. Reduced
+  HOVER_LIFT to 120 so the drone sinks when idle and only rises under thrust,
+  which matches the real logistics feel (fuel = energy = intentional).
+- **Result:** commits `ba97d76` and `c922c9d` (propeller position + hover
+  physics). Also built a standalone "Movement Lab" on the Desktop as a
+  learning copy — same drone.js physics, no game distractions.
+
 ---
 
 ## 3. Patterns I now own (knowledge gained)
