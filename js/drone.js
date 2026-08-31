@@ -28,7 +28,7 @@
 
   // Tuning constants (px, seconds, radians).
   const GRAVITY = 170;       // downward pull  px/s^2
-  const HOVER_LIFT = 205;    // lift that fights gravity px/s^2
+  const HOVER_LIFT = 120;    // lift that fights gravity px/s^2
   const THRUST = 520;        // max engine thrust along the nose
   const ROTATE_SPEED = 2.8;  // radians per second
   const DRAG = 0.42;         // base exponential damping 1/s
@@ -165,7 +165,7 @@
       /* --- rotor blades (spinning propellers) ------------------- */
       const spin = this.time * 42;
       ctx.save();
-      ctx.translate(-4, -12);
+      ctx.translate(-4, -9);
       ctx.rotate(spin);
       ctx.globalAlpha = 0.75;
       ctx.fillStyle = "#efe3c2";
