@@ -165,7 +165,7 @@
       /* --- rotor blades (spinning propellers) ------------------- */
       const spin = this.time * 42;
       ctx.save();
-      ctx.translate(-4, -9);
+      ctx.translate(1, -9);
       ctx.rotate(spin);
       ctx.globalAlpha = 0.75;
       ctx.fillStyle = "#efe3c2";
