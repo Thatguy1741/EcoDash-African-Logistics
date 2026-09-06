@@ -218,7 +218,11 @@
     }
     draw(ctx, camX, nf) {
       const flap = Math.sin(this.time * 14);
-      ctx.fillStyle = U.cssColour(U.shadeColour({ r: 40, g: 34, b: 28 }, 1 - nf * 0.4));
+      const dark = U.shadeColour({ r: 40, g: 34, b: 28 }, 1 - nf * 0.4);
+      const pale = U.shadeColour({ r: 236, g: 226, b: 192 }, 1 - nf * 0.4);
+      ctx.fillStyle = U.cssColour(dark);
+      ctx.strokeStyle = U.cssColour(pale);
+      ctx.lineWidth = 1.4;
       for (let i = 0; i < this.count; i++) {
         const bx = this.x - camX + i * this.spread;
         const by = this.birdY(i);
@@ -227,12 +231,14 @@
         ctx.beginPath();
         // Classic "V" bird silhouette with flapping wings.
         ctx.moveTo(0, 0);
-        ctx.quadraticCurveTo(-9, -5 + flap * 5, -13, -2 + flap * 4);
-        ctx.quadraticCurveTo(-6, -1, 0, 0);
+        ctx.quadraticCurveTo(-14, -8 + flap * 8, -20, -3 + flap * 6);
+        ctx.quadraticCurveTo(-9, -1, 0, 0);
         ctx.moveTo(0, 0);
-        ctx.quadraticCurveTo(9, -5 + flap * 5, 13, -2 + flap * 4);
-        ctx.quadraticCurveTo(6, -1, 0, 0);
+        ctx.quadraticCurveTo(14, -8 + flap * 8, 20, -3 + flap * 6);
+        ctx.quadraticCurveTo(9, -1, 0, 0);
         ctx.fill();
+        // Pale underwing outline so the flock pops on any sky.
+        ctx.stroke();
         ctx.restore();
       }
     }

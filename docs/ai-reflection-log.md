@@ -146,6 +146,19 @@ the live code defence and handle edits to any file.
   physics). Also built a standalone "Movement Lab" on the Desktop as a
   learning copy — same drone.js physics, no game distractions.
 
+### Session 10 — 2 Sep 2026 · Play-test: birds are invisible until you're hit
+- **Found myself:** while play-testing I kept crashing into bird flocks I never
+  saw coming — I only noticed them after the hit flash. Tracked it down to
+  `BirdObstacle.draw` in `js/obstacles.js`: the "V" silhouettes were only
+  ~26px wide and nearly the same tone as the sky at certain times of day.
+- **Lesson learned:** an obstacle the player can't see isn't an "atmosphere
+  detail", it's a fairness bug — you can't dodge what never registers. Chose
+  to scale the bird ~1.6× and add a pale underwing outline instead of
+  recolouring, so the flock still reads as wildlife and pops on any sky.
+- **Result:** `js/obstacles.js` bird draw change. Kept the collision radius at
+  10 so the hitbox is actually more forgiving than the visual — small fix,
+  big readability win.
+
 ---
 
 ## 3. Patterns I now own (knowledge gained)
