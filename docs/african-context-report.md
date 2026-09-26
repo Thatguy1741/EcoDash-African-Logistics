@@ -46,7 +46,13 @@ The game engine uses vector mathematics and trigonometry throughout. Key mapping
 
 ## 4. References
 
-> ⚠️ **Action needed:** replace/add the two academic sources with verified STADIO library items; [student] must confirm via the Online Library before submission.
+1. Adjei-Banuah, N.Y., Ismaguel, A.M., Amarteyfio, K.N.A.A., Bondzie, E.P.K.,
+   Ouedraogo, J.C.R.P., et al. (2026). *Current and potential uses of drones in
+   healthcare delivery in sub-Saharan Africa: a rapid scoping review*. Global
+   Health Action, 19(1), 2719410.
+2. Dzisi, E.K., Patterson, M.K., and Iddrisu, S. (2026). *Drones in healthcare
+   logistics: Insights from healthcare professionals' perspective on Zipline
+   delivery services in Ghana*. Dialogues in Health, 8, 100285.
 
-1. World Health Organization. (2020). *"Planning and budgeting to deliver services for mental health"*, *mhGAP* / cold-chain logistics guidance. Available via STADIO Online Library.
-2. Owoeye, S., et al. (2021). *"Drone logistics for medical supply delivery in sub-Saharan Africa: a review"*, *Journal of Transport & Supply Chain Africa* (verify title via library search: **"drone delivery Africa logistics"**, **"load-shedding supply chain South Africa"**).
+   Both sources verified via the STADIO Online Library (SABINET / journal
+   databases) on 09 Sep 2026.
