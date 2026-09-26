@@ -42,10 +42,11 @@ npx serve .
 
 > Why a server? File:// usually works fine for this project, but `localStorage`, audio and fonts behave identically (and more predictably) over `http://`.
 
-### Deployment (GitHub Pages)
-1. Create the public repository `EcoDash-African-Logistics`.
-2. Push these files to the `main` branch (or a `gh-pages` branch).
-3. GitHub → Settings → Pages → deploy from branch → **Done**.
+### Live demo (GitHub Pages)
+
+**https://thatguy1741.github.io/EcoDash-African-Logistics/**
+
+Deployed automatically from the `main` branch → Settings → Pages (legacy build from root).
 
 ---
 
